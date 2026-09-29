@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <style xmlns="http://purl.org/net/xbiblio/csl"
        version="1.0"
        class="in-text"
        name-as-sort-order="all"
        sort-separator=" "
        demote-non-dropping-particle="never"
-       initialize-with=" "
        initialize-with-hyphen="false"
        page-range-format="expanded"
        default-locale="zh-CN">
 
   <info>
     <title>China National Standard GB/T 7714-2015 (numeric, 中文)</title>
+
     <id>https://csl.mendeley.com/styles/706305821/china-national-standard-gb-t-7714-2015-numeric-4</id>
+
     <link href="http://www.zotero.org/styles/china-national-standard-gb-t-7714-2015-numeric"
           rel="self"/>
+
     <link href="https://std.samr.gov.cn/gb/search/gbDetailed?id=71F772D8055ED3A7E05397BE0A0AB82A"
           rel="documentation"/>
 
@@ -30,17 +33,25 @@
 
     <category citation-format="numeric"/>
     <category field="generic-base"/>
-    <summary>The Chinese GB/T 7714-2015 numeric style</summary>
+
+    <summary>
+      The Chinese GB/T 7714-2015 numeric style
+    </summary>
+
     <updated>2026-09-29T10:56:22+00:00</updated>
+
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">
       This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License
     </rights>
   </info>
 
+
   <!-- ========================================================= -->
   <!-- 中文语言设置 -->
   <!-- ========================================================= -->
+
   <locale xml:lang="zh">
+
     <date form="text">
       <date-part name="year"
                  suffix="年"
@@ -55,22 +66,28 @@
     </date>
 
     <terms>
+
       <term name="edition" form="short">版</term>
 
-      <!-- 中文文献：超过3位作者时使用“等” -->
+      <!-- 中文：超过3位作者显示“等” -->
       <term name="et-al">等</term>
 
       <term name="open-quote">“</term>
       <term name="close-quote">”</term>
       <term name="open-inner-quote">‘</term>
       <term name="close-inner-quote">’</term>
+
     </terms>
+
   </locale>
 
+
   <!-- ========================================================= -->
-  <!-- 英文及其他语言设置 -->
+  <!-- 英文语言设置 -->
   <!-- ========================================================= -->
-  <locale>
+
+  <locale xml:lang="en">
+
     <date form="numeric">
       <date-part name="year"
                  range-delimiter="/"/>
@@ -85,107 +102,117 @@
     </date>
 
     <terms>
-      <!-- 英文文献：超过3位作者时使用“et al”，不加句点 -->
+
+      <!-- 英文：超过3位作者显示“et al”，不加句点 -->
       <term name="et-al">et al</term>
 
       <term name="page-range-delimiter">-</term>
+
     </terms>
+
   </locale>
 
 
   <!-- ========================================================= -->
   <!-- 作者 -->
   <!-- ========================================================= -->
+
   <macro name="author">
 
-    <choose>
+    <names variable="author">
 
-      <!-- ===================================================== -->
-      <!-- 中文文献 -->
-      <!-- ≤3位：全部列出 -->
-      <!-- >3位：前3位 + “, 等” -->
-      <!-- ===================================================== -->
-      <if locale="zh">
+      <!--
+        作者规则：
+        1. ≤3位：全部列出
+        2. >3位：前3位 + et al/等
+        3. 作者之间使用英文逗号+空格
+        4. 不使用 and
+      -->
 
-        <names variable="author">
+      <name
+        et-al-min="4"
+        et-al-use-first="3"
+        delimiter=", "
+        delimiter-precedes-et-al="always"
+        initialize="true"/>
 
-          <name
-            et-al-min="4"
-            et-al-use-first="3"
-            delimiter=", "
-            delimiter-precedes-et-al="always"
-            and="never">
+      <substitute>
 
-            <name-part
-              name="family"
-              text-case="capitalize-first"/>
+        <names variable="composer"/>
 
-          </name>
+        <names variable="illustrator"/>
 
-          <substitute>
-            <names variable="composer"/>
-            <names variable="illustrator"/>
-            <names variable="director"/>
+        <names variable="director"/>
 
-            <choose>
-              <if variable="container-title" match="none">
-                <names variable="editor"/>
-              </if>
-            </choose>
+        <choose>
 
-          </substitute>
+          <if variable="container-title"
+              match="none">
 
-        </names>
+            <names variable="editor"/>
 
-      </if>
+          </if>
+
+        </choose>
+
+      </substitute>
+
+    </names>
+
+  </macro>
 
 
-      <!-- ===================================================== -->
-      <!-- 英文文献 -->
-      <!-- ≤3位：全部列出 -->
-      <!-- >3位：前3位 + “, et al” -->
-      <!-- 姓在前 -->
-      <!-- 名缩写 -->
-      <!-- 缩写后不加句点 -->
-      <!-- 作者之间使用英文逗号 -->
-      <!-- 不使用 and -->
-      <!-- ===================================================== -->
-      <else>
+  <!-- ========================================================= -->
+  <!-- 英文作者 -->
+  <!-- ========================================================= -->
 
-        <names variable="author">
+  <macro name="author-en">
 
-          <name
-            et-al-min="4"
-            et-al-use-first="3"
-            delimiter=", "
-            delimiter-precedes-et-al="always"
-            and="never"
-            initialize-with=" ">
+    <names variable="author">
 
-            <name-part
-              name="family"
-              text-case="capitalize-first"/>
+      <!--
+        英文作者：
+        Smith J, Brown T, Wang W
+        超过3位：
+        Smith J, Brown T, Wang W, et al
 
-          </name>
+        initialize-with=" "
+        表示：
+        John → J
+        James → J
+        不添加句点
+      -->
 
-          <substitute>
-            <names variable="composer"/>
-            <names variable="illustrator"/>
-            <names variable="director"/>
+      <name
+        et-al-min="4"
+        et-al-use-first="3"
+        delimiter=", "
+        delimiter-precedes-et-al="always"
+        initialize-with=" "
+        initialize="true"/>
 
-            <choose>
-              <if variable="container-title" match="none">
-                <names variable="editor"/>
-              </if>
-            </choose>
+      <substitute>
 
-          </substitute>
+        <names variable="composer"/>
 
-        </names>
+        <names variable="illustrator"/>
 
-      </else>
+        <names variable="director"/>
 
-    </choose>
+        <choose>
+
+          <if variable="container-title"
+              match="none">
+
+            <names variable="editor"/>
+
+          </if>
+
+        </choose>
+
+      </substitute>
+
+    </names>
 
   </macro>
 
@@ -193,6 +220,7 @@
   <!-- ========================================================= -->
   <!-- 题名 -->
   <!-- ========================================================= -->
+
   <macro name="title">
 
     <group delimiter=", ">
@@ -204,29 +232,39 @@
         <group delimiter=" ">
 
           <choose>
+
             <if variable="container-title"
                 type="chapter entry-dictionary entry-encyclopedia paper-conference"
                 match="none">
 
               <text macro="volume"/>
+
               <text variable="volume-title"/>
 
             </if>
+
           </choose>
 
           <choose>
-            <if type="article article-journal" match="none">
+
+            <if type="article article-journal"
+                match="none">
+
               <text variable="number"/>
+
             </if>
+
           </choose>
 
           <choose>
+
             <if type="collection manuscript personal_communication"
                 match="any">
 
               <text variable="archive_location"/>
 
             </if>
+
           </choose>
 
         </group>
@@ -265,6 +303,7 @@
            suffix="]">
 
       <text macro="type-id"/>
+
       <text macro="medium-id"/>
 
     </group>
@@ -275,6 +314,7 @@
   <!-- ========================================================= -->
   <!-- 卷 -->
   <!-- ========================================================= -->
+
   <macro name="volume">
 
     <choose>
@@ -316,6 +356,7 @@
   <!-- ========================================================= -->
   <!-- 文献类型 -->
   <!-- ========================================================= -->
+
   <macro name="type-id">
 
     <choose>
@@ -416,6 +457,7 @@
   <!-- ========================================================= -->
   <!-- 载体 -->
   <!-- ========================================================= -->
+
   <macro name="medium-id">
 
     <choose>
@@ -437,6 +479,7 @@
   <!-- ========================================================= -->
   <!-- 翻译者 -->
   <!-- ========================================================= -->
+
   <macro name="secondary-contributors">
 
     <names variable="translator">
@@ -460,6 +503,7 @@
   <!-- ========================================================= -->
   <!-- 编者 -->
   <!-- ========================================================= -->
+
   <macro name="container-contributors">
 
     <names variable="editor">
@@ -473,9 +517,13 @@
       </name>
 
       <substitute>
+
         <names variable="editorial-director"/>
+
         <names variable="collection-editor"/>
+
         <names variable="container-author"/>
+
       </substitute>
 
     </names>
@@ -486,6 +534,7 @@
   <!-- ========================================================= -->
   <!-- 图书类 -->
   <!-- ========================================================= -->
+
   <macro name="container-booklike">
 
     <group delimiter=", ">
@@ -497,6 +546,7 @@
           <group delimiter=": ">
 
             <text variable="container-title"/>
+
             <text macro="volume"/>
 
           </group>
@@ -535,6 +585,7 @@
   <!-- ========================================================= -->
   <!-- 期刊 -->
   <!-- ========================================================= -->
+
   <macro name="container-periodical">
 
     <choose>
@@ -544,6 +595,7 @@
         <group delimiter=", ">
 
           <text variable="container-title"/>
+
           <text macro="issued-date"/>
 
         </group>
@@ -564,7 +616,9 @@
             <group delimiter=", ">
 
               <text variable="container-title"/>
+
               <text macro="issued-year"/>
+
               <text variable="volume"/>
 
             </group>
@@ -591,6 +645,7 @@
   <!-- ========================================================= -->
   <!-- 版次 -->
   <!-- ========================================================= -->
+
   <macro name="edition">
 
     <choose>
@@ -623,11 +678,13 @@
   <!-- ========================================================= -->
   <!-- 年、卷、期 -->
   <!-- ========================================================= -->
+
   <macro name="year-volume-issue">
 
     <group delimiter=", ">
 
       <text macro="issued-year"/>
+
       <text variable="volume"/>
 
     </group>
@@ -642,6 +699,7 @@
   <!-- ========================================================= -->
   <!-- 出版信息 -->
   <!-- ========================================================= -->
+
   <macro name="publisher">
 
     <choose>
@@ -649,6 +707,7 @@
       <if type="patent">
 
         <text macro="issued-date"/>
+
         <text macro="accessed-date"/>
 
       </if>
@@ -670,6 +729,7 @@
                     match="any">
 
                   <text variable="publisher-place"/>
+
                   <text variable="publisher"/>
 
                 </if>
@@ -677,6 +737,7 @@
                 <else>
 
                   <text variable="archive-place"/>
+
                   <text variable="archive"/>
 
                 </else>
@@ -722,8 +783,9 @@
 
 
   <!-- ========================================================= -->
-  <!-- 文献条目 -->
+  <!-- 出版年份 -->
   <!-- ========================================================= -->
+
   <macro name="issued-year">
 
     <choose>
@@ -784,6 +846,7 @@
   <!-- ========================================================= -->
   <!-- 日期 -->
   <!-- ========================================================= -->
+
   <macro name="issued-date">
 
     <date variable="issued"
@@ -795,11 +858,13 @@
   <!-- ========================================================= -->
   <!-- 访问日期 -->
   <!-- ========================================================= -->
+
   <macro name="accessed-date">
 
     <choose>
 
-      <if variable="URL DOI"/>
+      <if variable="URL DOI"
+          match="any"/>
 
     </choose>
 
@@ -807,8 +872,9 @@
 
 
   <!-- ========================================================= -->
-  <!-- URL/DOI -->
+  <!-- URL / DOI -->
   <!-- ========================================================= -->
+
   <macro name="access">
 
     <group delimiter=". "/>
@@ -819,6 +885,7 @@
   <!-- ========================================================= -->
   <!-- 最终输出格式 -->
   <!-- ========================================================= -->
+
   <macro name="entry-layout">
 
     <group delimiter=". ">
@@ -830,7 +897,9 @@
         <if type="periodical">
 
           <text macro="title"/>
+
           <text macro="year-volume-issue"/>
+
           <text macro="publisher"/>
 
         </if>
@@ -840,6 +909,7 @@
                   match="any">
 
           <text macro="title"/>
+
           <text macro="container-periodical"/>
 
         </else-if>
@@ -848,6 +918,7 @@
         <else-if type="patent">
 
           <text macro="title"/>
+
           <text macro="publisher"/>
 
         </else-if>
@@ -857,6 +928,7 @@
                   match="any">
 
           <text macro="title"/>
+
           <text macro="publisher"/>
 
         </else-if>
@@ -871,6 +943,7 @@
             <group delimiter=". ">
 
               <text macro="title"/>
+
               <text macro="secondary-contributors"/>
 
             </group>
@@ -879,6 +952,7 @@
             <group delimiter=". ">
 
               <text macro="container-contributors"/>
+
               <text macro="container-booklike"/>
 
             </group>
@@ -886,6 +960,7 @@
           </group>
 
           <text macro="edition"/>
+
           <text macro="publisher"/>
 
         </else-if>
@@ -894,8 +969,11 @@
         <else>
 
           <text macro="title"/>
+
           <text macro="secondary-contributors"/>
+
           <text macro="edition"/>
+
           <text macro="publisher"/>
 
         </else>
@@ -913,17 +991,21 @@
   <!-- ========================================================= -->
   <!-- 文中引用 -->
   <!-- ========================================================= -->
+
   <citation collapse="citation-number"
             after-collapse-delimiter=",">
 
     <sort>
+
       <key variable="citation-number"/>
+
     </sort>
 
-    <layout vertical-align="sup"
-            delimiter=","
-            prefix="["
-            suffix="]">
+    <layout
+      vertical-align="sup"
+      delimiter=","
+      prefix="["
+      suffix="]">
 
       <text variable="citation-number"/>
 
@@ -935,6 +1017,7 @@
   <!-- ========================================================= -->
   <!-- 参考文献 -->
   <!-- ========================================================= -->
+
   <bibliography
     entry-spacing="0"
     et-al-min="4"
