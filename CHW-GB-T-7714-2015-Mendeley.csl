@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" class="in-text" name-as-sort-order="all" sort-separator=" " demote-non-dropping-particle="never" initialize-with=" " initialize-with-hyphen="false" page-range-format="expanded" default-locale="zh-CN">
   <info>
     <title>China National Standard GB/T 7714-2015 (numeric, 中文)</title>
@@ -19,6 +20,7 @@
     <updated>2026-09-29T10:56:22+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
+
   <locale xml:lang="zh">
     <date form="text">
       <date-part name="year" suffix="年" range-delimiter="—"/>
@@ -33,6 +35,7 @@
       <term name="close-inner-quote">’</term>
     </terms>
   </locale>
+
   <locale>
     <date form="numeric">
       <date-part name="year" range-delimiter="/"/>
@@ -43,6 +46,7 @@
       <term name="page-range-delimiter">-</term>
     </terms>
   </locale>
+
   <macro name="author">
     <names variable="author">
       <name et-al-min="4" et-al-use-first="3">
@@ -60,6 +64,7 @@
       </substitute>
     </names>
   </macro>
+
   <macro name="title">
     <group delimiter=", ">
       <group delimiter=": ">
@@ -99,6 +104,7 @@
       <text macro="medium-id"/>
     </group>
   </macro>
+
   <macro name="volume">
     <choose>
       <if type="article article-journal article-magazine article-newspaper periodical" match="none">
@@ -116,6 +122,7 @@
       </if>
     </choose>
   </macro>
+
   <macro name="type-id">
     <choose>
       <if type="article bill collection hearing legal_case legislation personal_communication regulation treaty" match="any">
@@ -162,14 +169,15 @@
       </else>
     </choose>
   </macro>
+
   <macro name="medium-id">
     <choose>
       <if variable="medium">
         <text variable="medium"/>
       </if>
-      <else-if variable="URL DOI" match="any"/>
     </choose>
   </macro>
+
   <macro name="secondary-contributors">
     <names variable="translator">
       <name>
@@ -178,6 +186,7 @@
       <label form="short" prefix=", "/>
     </names>
   </macro>
+
   <macro name="container-contributors">
     <names variable="editor">
       <name>
@@ -190,6 +199,7 @@
       </substitute>
     </names>
   </macro>
+
   <macro name="container-booklike">
     <group delimiter=", ">
       <choose>
@@ -211,6 +221,7 @@
       </choose>
     </group>
   </macro>
+
   <macro name="container-periodical">
     <choose>
       <if type="article-newspaper">
@@ -234,8 +245,8 @@
         </group>
       </else>
     </choose>
-    <text macro="accessed-date"/>
   </macro>
+
   <macro name="edition">
     <choose>
       <if is-numeric="edition">
@@ -249,6 +260,7 @@
       </else>
     </choose>
   </macro>
+
   <macro name="year-volume-issue">
     <group delimiter=", ">
       <text macro="issued-year"/>
@@ -256,11 +268,11 @@
     </group>
     <text variable="issue" prefix="(" suffix=")"/>
   </macro>
+
   <macro name="publisher">
     <choose>
       <if type="patent">
         <text macro="issued-date"/>
-        <text macro="accessed-date"/>
       </if>
       <else-if type="book chapter paper-conference periodical thesis" variable="archive archive-place publisher publisher-place page" match="any">
         <group delimiter=": ">
@@ -281,17 +293,16 @@
           </group>
           <text variable="page"/>
         </group>
-        <text macro="accessed-date"/>
       </else-if>
       <else-if variable="URL DOI" match="any">
         <text macro="issued-date" prefix="(" suffix=")"/>
-        <text macro="accessed-date"/>
       </else-if>
       <else>
         <text macro="issued-year"/>
       </else>
     </choose>
   </macro>
+
   <macro name="issued-year">
     <choose>
       <if variable="issued">
@@ -312,17 +323,11 @@
       </else>
     </choose>
   </macro>
+
   <macro name="issued-date">
     <date variable="issued" form="numeric"/>
   </macro>
-  <macro name="accessed-date">
-    <choose>
-      <if variable="URL DOI" match="any"/>
-    </choose>
-  </macro>
-  <macro name="access">
-    <group delimiter=". "/>
-  </macro>
+
   <macro name="entry-layout">
     <group delimiter=". ">
       <text macro="author"/>
@@ -365,9 +370,9 @@
           <text macro="publisher"/>
         </else>
       </choose>
-      <text macro="access"/>
     </group>
   </macro>
+
   <citation collapse="citation-number" after-collapse-delimiter=",">
     <sort>
       <key variable="citation-number"/>
@@ -376,6 +381,7 @@
       <text variable="citation-number"/>
     </layout>
   </citation>
+
   <bibliography entry-spacing="0" et-al-min="4" et-al-use-first="3" second-field-align="flush">
     <layout suffix=".">
       <text variable="citation-number" prefix="[" suffix="]"/>
