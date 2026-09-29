@@ -8,41 +8,30 @@
        demote-non-dropping-particle="never"
        initialize-with-hyphen="false"
        page-range-format="expanded"
-       default-locale="zh-CN">
+       default-locale="en-US">
 
   <info>
 
-    <title>China National Standard GB/T 7714-2015 (numeric, 中文)</title>
+    <title>China National Standard GB/T 7714-2015 (numeric, customized)</title>
 
-    <id>http://csl.mendeley.com/styles/706305821/caohuiwen</id>
-
-    <link
-      href="http://www.zotero.org/styles/china-national-standard-gb-t-7714-2015-numeric"
-      rel="self"/>
+    <id>https://github.com/jichao181/GB-T-7714-Mendeley/CHW</id>
 
     <link
-      href="https://std.samr.gov.cn/gb/search/gbDetailed?id=71F772D8055ED3A7E05397BE0A0AB82A"
-      rel="documentation"/>
+      href="https://github.com/jichao181/GB-T-7714-Mendeley"
+      rel="repository"/>
 
     <author>
-      <name>牛耕田</name>
-      <email>buffalo_d@163.com</email>
+      <name>Jichao</name>
     </author>
 
-    <contributor>
-      <name>Zeping Lee</name>
-      <email>zepinglee@gmail.com</email>
-    </contributor>
-
     <category citation-format="numeric"/>
-
     <category field="generic-base"/>
 
     <summary>
-      The Chinese GB/T 7714-2015 numeric style
+      Customized GB/T 7714-2015 numeric style for Mendeley
     </summary>
 
-    <updated>2026-09-29T14:28:10+00:00</updated>
+    <updated>2026-09-29T00:00:00+00:00</updated>
 
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">
       This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License
@@ -52,30 +41,10 @@
 
 
   <!-- ========================================================= -->
-  <!-- 中文 -->
+  <!-- 中文语言 -->
   <!-- ========================================================= -->
 
   <locale xml:lang="zh-CN">
-
-    <date form="text">
-
-      <date-part
-        name="year"
-        suffix="年"
-        range-delimiter="—"/>
-
-      <date-part
-        name="month"
-        form="numeric"
-        suffix="月"
-        range-delimiter="—"/>
-
-      <date-part
-        name="day"
-        suffix="日"
-        range-delimiter="—"/>
-
-    </date>
 
     <terms>
 
@@ -84,11 +53,9 @@
       <term name="et-al">等</term>
 
       <term name="open-quote">“</term>
-
       <term name="close-quote">”</term>
 
       <term name="open-inner-quote">‘</term>
-
       <term name="close-inner-quote">’</term>
 
     </terms>
@@ -97,30 +64,10 @@
 
 
   <!-- ========================================================= -->
-  <!-- 英文 -->
+  <!-- 英文语言 -->
   <!-- ========================================================= -->
 
   <locale xml:lang="en">
-
-    <date form="numeric">
-
-      <date-part
-        name="year"
-        range-delimiter="/"/>
-
-      <date-part
-        name="month"
-        form="numeric-leading-zeros"
-        prefix="-"
-        range-delimiter="/"/>
-
-      <date-part
-        name="day"
-        form="numeric-leading-zeros"
-        prefix="-"
-        range-delimiter="/"/>
-
-    </date>
 
     <terms>
 
@@ -160,8 +107,7 @@
 
         <choose>
 
-          <if variable="container-title"
-              match="none">
+          <if variable="container-title" match="none">
 
             <names variable="editor"/>
 
@@ -186,7 +132,10 @@
 
       <group delimiter=": ">
 
-        <text variable="title"/>
+        <!-- 使用 sentence case -->
+        <text
+          variable="title"
+          text-case="sentence"/>
 
         <group delimiter=" ">
 
@@ -205,7 +154,6 @@
 
           </choose>
 
-
           <choose>
 
             <if
@@ -217,7 +165,6 @@
             </if>
 
           </choose>
-
 
           <choose>
 
@@ -264,6 +211,7 @@
     </group>
 
 
+    <!-- 文献类型 -->
     <group
       delimiter="/"
       prefix="["
@@ -454,12 +402,6 @@
 
       </if>
 
-      <else>
-
-        <text value=""/>
-
-      </else>
-
     </choose>
 
   </macro>
@@ -473,13 +415,11 @@
 
     <names variable="translator">
 
-      <name>
-
-        <name-part
-          name="family"
-          text-case="uppercase"/>
-
-      </name>
+      <name
+        name-as-sort-order="all"
+        sort-separator=" "
+        initialize-with=" "
+        delimiter=", "/>
 
       <label
         form="short"
@@ -498,13 +438,11 @@
 
     <names variable="editor">
 
-      <name>
-
-        <name-part
-          name="family"
-          text-case="uppercase"/>
-
-      </name>
+      <name
+        name-as-sort-order="all"
+        sort-separator=" "
+        initialize-with=" "
+        delimiter=", "/>
 
       <substitute>
 
@@ -583,6 +521,7 @@
 
     <choose>
 
+      <!-- 报纸 -->
       <if type="article-newspaper">
 
         <group delimiter=", ">
@@ -601,28 +540,33 @@
       </if>
 
 
+      <!-- 普通期刊论文 -->
       <else>
 
         <group delimiter=": ">
 
-          <group>
+          <!-- 年, 卷(期) -->
 
-            <group delimiter=", ">
+          <group delimiter=", ">
 
-              <text variable="container-title"/>
+            <text macro="issued-year"/>
 
-              <text macro="issued-year"/>
+            <group>
 
+              <!-- 卷 -->
               <text variable="volume"/>
+
+              <!-- 期 -->
+              <text
+                variable="issue"
+                prefix="("
+                suffix=")"/>
 
             </group>
 
-            <text
-              variable="issue"
-              prefix="("
-              suffix=")"/>
-
           </group>
+
+          <!-- 页码 -->
 
           <text variable="page"/>
 
@@ -681,14 +625,18 @@
 
       <text macro="issued-year"/>
 
-      <text variable="volume"/>
+      <group>
+
+        <text variable="volume"/>
+
+        <text
+          variable="issue"
+          prefix="("
+          suffix=")"/>
+
+      </group>
 
     </group>
-
-    <text
-      variable="issue"
-      prefix="("
-      suffix=")"/>
 
   </macro>
 
@@ -847,7 +795,6 @@
       <choose>
 
         <!-- 期刊 -->
-
         <if type="periodical">
 
           <text macro="title"/>
@@ -860,7 +807,6 @@
 
 
         <!-- 期刊论文 -->
-
         <else-if
           type="article-journal article-magazine article-newspaper"
           match="any">
@@ -873,7 +819,6 @@
 
 
         <!-- 专利 -->
-
         <else-if type="patent">
 
           <text macro="title"/>
@@ -884,7 +829,6 @@
 
 
         <!-- 网络资源 -->
-
         <else-if
           type="dataset post post-weblog software webpage"
           match="any">
@@ -897,7 +841,6 @@
 
 
         <!-- 章节 / 会议论文 -->
-
         <else-if
           type="chapter entry-dictionary entry-encyclopedia paper-conference"
           variable="container-title"
@@ -933,7 +876,6 @@
 
 
         <!-- 图书 / 学位论文等 -->
-
         <else>
 
           <text macro="title"/>
@@ -1002,5 +944,6 @@
     </layout>
 
   </bibliography>
+
 
 </style>
