@@ -5,339 +5,298 @@
        class="in-text"
        default-locale="en-US">
 
-  <info>
+<info>
+<title>CHW GB/T 7714-2015 Numeric</title>
 
-    <title>CHW GB/T 7714-2015 Numeric</title>
+<id>https://github.com/jichao181/GB-T-7714-Mendeley/CHW</id>
 
-    <id>https://github.com/jichao181/GB-T-7714-Mendeley/CHW</id>
+<updated>2026-09-30T00:00:00+00:00</updated>
 
-    <link
-      href="https://github.com/jichao181/GB-T-7714-Mendeley"
-      rel="repository"/>
+</info>
 
-    <updated>2026-09-29T00:00:00+00:00</updated>
+<!-- ========================================================= -->
+<!-- 中文 -->
+<!-- ========================================================= -->
 
-  </info>
+<locale xml:lang="zh-CN">
+<terms>
+<term name="et-al">等</term>
+<term name="page-range-delimiter">-</term>
+</terms>
+</locale>
 
+<!-- ========================================================= -->
+<!-- 英文 -->
+<!-- ========================================================= -->
 
-  <!-- ========================================================= -->
-  <!-- 中文 -->
-  <!-- ========================================================= -->
+<locale xml:lang="en">
+<terms>
+<term name="et-al">et al</term>
+<term name="page-range-delimiter">-</term>
+</terms>
+</locale>
 
-  <locale xml:lang="zh-CN">
+<!-- ========================================================= -->
+<!-- 作者 -->
+<!-- ========================================================= -->
 
-    <terms>
+<macro name="author">
 
-      <term name="et-al">等</term>
+<names variable="author">
 
-      <term name="page-range-delimiter">-</term>
+<name
+name-as-sort-order="all"
+sort-separator=" "
+initialize-with=" "
+delimiter=", "
+delimiter-precedes-et-al="always"
+et-al-min="4"
+et-al-use-first="3"/>
 
-    </terms>
+<substitute>
+<names variable="editor"/>
+</substitute>
 
-  </locale>
+</names>
 
+</macro>
 
-  <!-- ========================================================= -->
-  <!-- 英文 -->
-  <!-- ========================================================= -->
+<!-- ========================================================= -->
+<!-- 文献类型 -->
+<!-- ========================================================= -->
 
-  <locale xml:lang="en">
+<macro name="type">
 
-    <terms>
+<choose>
 
-      <term name="et-al">et al</term>
+<if
+type="article-journal article-magazine periodical"
+match="any">
 
-      <term name="page-range-delimiter">-</term>
+<text value="J"/>
 
-    </terms>
+</if>
 
-  </locale>
+<else-if type="article-newspaper">
 
+<text value="N"/>
 
-  <!-- ========================================================= -->
-  <!-- 作者 -->
-  <!-- ========================================================= -->
+</else-if>
 
-  <macro name="author">
+<else-if type="paper-conference">
 
-    <names variable="author">
+<text value="C"/>
 
-      <name
-        name-as-sort-order="all"
-        sort-separator=" "
-        initialize-with=" "
-        delimiter=", "
-        delimiter-precedes-et-al="always"
-        et-al-min="4"
-        et-al-use-first="3"/>
+</else-if>
 
-      <substitute>
+<else-if
+type="book chapter entry-dictionary entry-encyclopedia"
+match="any">
 
-        <names variable="editor"/>
+<text value="M"/>
 
-      </substitute>
+</else-if>
 
-    </names>
+<else-if type="thesis">
 
-  </macro>
+<text value="D"/>
 
+</else-if>
 
-  <!-- ========================================================= -->
-  <!-- 文献类型 -->
-  <!-- ========================================================= -->
+<else-if type="patent">
 
-  <macro name="type">
+<text value="P"/>
 
-    <choose>
+</else-if>
 
-      <if
-        type="article-journal article-magazine periodical"
-        match="any">
+<else-if type="report">
 
-        <text value="J"/>
+<text value="R"/>
 
-      </if>
+</else-if>
 
+<else-if type="standard">
 
-      <else-if type="article-newspaper">
+<text value="S"/>
 
-        <text value="N"/>
+</else-if>
 
-      </else-if>
+<else>
 
+<text value="Z"/>
 
-      <else-if type="paper-conference">
+</else>
 
-        <text value="C"/>
+</choose>
 
-      </else-if>
+</macro>
 
+<!-- ========================================================= -->
+<!-- 题名 + 文献类型 -->
+<!-- ========================================================= -->
 
-      <else-if
-        type="book chapter entry-dictionary entry-encyclopedia"
-        match="any">
+<macro name="title">
 
-        <text value="M"/>
+<group delimiter="">
 
-      </else-if>
+<text
+variable="title"
+text-case="sentence"/>
 
+<group
+prefix="["
+suffix="]">
 
-      <else-if type="thesis">
+<text macro="type"/>
 
-        <text value="D"/>
+</group>
 
-      </else-if>
+</group>
 
+</macro>
 
-      <else-if type="patent">
+<!-- ========================================================= -->
+<!-- 年 -->
+<!-- ========================================================= -->
 
-        <text value="P"/>
+<macro name="year">
 
-      </else-if>
+<date
+variable="issued"
+form="numeric"
+date-parts="year"/>
 
+</macro>
 
-      <else-if type="report">
+<!-- ========================================================= -->
+<!-- 期刊信息 -->
+<!-- ========================================================= -->
 
-        <text value="R"/>
+<macro name="journal">
 
-      </else-if>
+<group delimiter=", ">
 
+<!-- 期刊名 -->
 
-      <else-if type="standard">
+<text variable="container-title"/>
 
-        <text value="S"/>
+<!-- 年 -->
 
-      </else-if>
+<text macro="year"/>
 
+<!-- 卷(期) -->
 
-      <else>
+<group delimiter="">
 
-        <text value="Z"/>
+<text variable="volume"/>
 
-      </else>
+<text
+variable="issue"
+prefix="("
+suffix=")"/>
 
-    </choose>
+</group>
 
-  </macro>
+</group>
 
+</macro>
 
-  <!-- ========================================================= -->
-  <!-- 题名 + 文献类型 -->
-  <!-- ========================================================= -->
+<!-- ========================================================= -->
+<!-- 页码 -->
+<!-- ========================================================= -->
 
-  <macro name="title">
+<macro name="pages">
 
-    <group delimiter="">
+<text variable="page"/>
 
-      <text
-        variable="title"
-        text-case="sentence"/>
+</macro>
 
-      <group
-        prefix="["
-        suffix="]">
+<!-- ========================================================= -->
+<!-- 文中引用 -->
+<!-- ========================================================= -->
 
-        <text macro="type"/>
+<citation>
 
-      </group>
+<layout
+prefix="["
+suffix="]"
+delimiter=",">
 
-    </group>
+<text variable="citation-number"/>
 
-  </macro>
+</layout>
 
+</citation>
 
-  <!-- ========================================================= -->
-  <!-- 年 -->
-  <!-- ========================================================= -->
+<!-- ========================================================= -->
+<!-- 参考文献 -->
+<!-- ========================================================= -->
 
-  <macro name="year">
+<bibliography
+entry-spacing="0"
+line-spacing="1">
 
-    <date
-      variable="issued"
-      form="numeric"
-      date-parts="year"/>
+<layout suffix=".">
 
-  </macro>
+<!-- [1] -->
 
+<text
+variable="citation-number"
+prefix="["
+suffix="]"/>
 
-  <!-- ========================================================= -->
-  <!-- 期刊信息 -->
-  <!-- ========================================================= -->
+<!-- 作者 -->
 
-  <macro name="journal">
+<text
+macro="author"
+suffix=". "/>
 
-    <group delimiter=", ">
+<choose>
 
-      <!-- 期刊名 -->
+<!-- ================================================= -->
+<!-- 期刊论文 -->
+<!-- ================================================= -->
 
-      <text variable="container-title"/>
+<if
+type="article-journal article-magazine article-newspaper periodical"
+match="any">
 
+<!-- 题名[J] -->
 
-      <!-- 年 -->
+<text
+macro="title"
+suffix=". "/>
 
-      <text macro="year"/>
+<!-- 期刊, 年, 卷(期): 页码 -->
 
+<group delimiter=": ">
 
-      <!-- 卷(期) -->
+<text macro="journal"/>
 
-      <group delimiter="">
+<text macro="pages"/>
 
-        <text variable="volume"/>
+</group>
 
-        <text
-          variable="issue"
-          prefix="("
-          suffix=")"/>
+</if>
 
-      </group>
+<!-- ================================================= -->
+<!-- 其他文献 -->
+<!-- ================================================= -->
 
-    </group>
+<else>
 
-  </macro>
+<text
+macro="title"
+suffix=". "/>
 
+<text macro="year"/>
 
-  <!-- ========================================================= -->
-  <!-- 页码 -->
-  <!-- ========================================================= -->
+</else>
 
-  <macro name="pages">
+</choose>
 
-    <text variable="page"/>
+</layout>
 
-  </macro>
-
-
-  <!-- ========================================================= -->
-  <!-- 文中引用 -->
-  <!-- ========================================================= -->
-
-  <citation>
-
-    <layout
-      prefix="["
-      suffix="]"
-      delimiter=",">
-
-      <text variable="citation-number"/>
-
-    </layout>
-
-  </citation>
-
-
-  <!-- ========================================================= -->
-  <!-- 参考文献 -->
-  <!-- ========================================================= -->
-
-  <bibliography
-    entry-spacing="0"
-    line-spacing="1">
-
-    <layout suffix=".">
-
-      <!-- [1] -->
-
-      <text
-        variable="citation-number"
-        prefix="["
-        suffix="]"/>
-
-
-      <!-- 作者 -->
-
-      <text
-        macro="author"
-        suffix=". "/>
-
-
-      <choose>
-
-        <!-- ================================================= -->
-        <!-- 期刊论文 -->
-        <!-- ================================================= -->
-
-        <if
-          type="article-journal article-magazine article-newspaper periodical"
-          match="any">
-
-          <!-- 题名[J] -->
-
-          <text
-            macro="title"
-            suffix=". "/>
-
-
-          <!-- 期刊, 年, 卷(期): 页码 -->
-
-          <group delimiter=": ">
-
-            <text macro="journal"/>
-
-            <text macro="pages"/>
-
-          </group>
-
-        </if>
-
-
-        <!-- ================================================= -->
-        <!-- 其他文献 -->
-        <!-- ================================================= -->
-
-        <else>
-
-          <text
-            macro="title"
-            suffix=". "/>
-
-          <text macro="year"/>
-
-        </else>
-
-      </choose>
-
-    </layout>
-
-  </bibliography>
+</bibliography>
 
 </style>
